@@ -1,0 +1,24 @@
+{ 
+    "compilerOptions": { 
+        "emitDecoratorMetadata": true, 
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "module": "commonjs", 
+        "target": "es6",
+        "sourceMap": true,
+        "outDir": "lib",
+        "declaration": true,
+        "forceConsistentCasingInFileNames": true,
+        "noLib": false,
+        "lib": [
+            "esnext"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "lib"
+    ],
+    "include": [
+        "src/**.ts"
+    ]
+}

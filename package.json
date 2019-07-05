@@ -1,0 +1,38 @@
+{
+  "name": "pmr-core",
+  "version": "0.0.1",
+  "description": "Core library of Poor Man's Rekognition project under CCExtractor Development",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "ccextractor",
+    "face-recognition",
+    "video-analytics",
+    "poor-mans-rekognition",
+    "amazon-rekognition"
+  ],
+  "author": {
+    "name": "Sarfaraz Iraqui",
+    "email": "sarfarazghlm@gmail.com"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^1.2.3",
+    "nodoface": "0.0.2",
+    "rollup": "^1.16.6"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.0.12",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  }
+}

@@ -1,0 +1,5 @@
+# auto-generated files
+**/node_modules/**
+.vscode
+# transpiled files
+lib
