@@ -18,35 +18,13 @@ export class ArcFaceResnetModel {
             kernelInitializer: this.weightInit,
             name: 'conv1'
         }).apply(inputLayer);
-        const bnorm1 = tf.layers.batchNormalization({
-            axis: 3,
-            momentum: 0.9,
-            epsilon: 2e-5,
-            betaInitializer: 'zeros',
-            gammaInitializer: tf.initializers.randomNormal({
-                mean: 1.0,
-                stddev: 0.002
-            }),
-            trainable: this.trainable,
-            name: 'bnorm1'
-        }).apply(conv1);
+        const bnorm1 = tf.layers.batchNormalization(this.getBnormConfig()).apply(conv1);
         const prelu1 = tf.layers.prelu({ name: 'prelu1' }).apply(bnorm1);
         const topModel = tf.model({ inputs: inputLayer, outputs: prelu1 as tf.SymbolicTensor });
         // ? pooling either here or in resnetblock conditionally
 
         // blocks
-        const bnorm2 = tf.layers.batchNormalization({
-            axis: 3,
-            momentum: 0.9,
-            epsilon: 2e-5,
-            betaInitializer: 'zeros',
-            gammaInitializer: tf.initializers.randomNormal({
-                mean: 1.0,
-                stddev: 0.002
-            }),
-            trainable: this.trainable,
-            name: 'bnorm2'
-        }); // .apply(lastBlock)
+        const bnorm2 = tf.layers.batchNormalization(this.getBnormConfig()); // .apply(lastBlock)
         // ? get ouput of bnorm2
     }
     resnetV1Layers(upperModel: tf.LayersModel, depth: number, bottleneckDepth: number, stride: number, rate: number = 1) {
@@ -66,28 +44,10 @@ export class ArcFaceResnetModel {
                 kernelInitializer: this.weightInit
             }).apply(upperModel.output);
 
-            shortcut = tf.layers.batchNormalization({
-                momentum: 0.9,
-                epsilon: 2e-5,
-                betaInitializer: 'zeros',
-                gammaInitializer: tf.initializers.randomNormal({
-                    mean: 1.0,
-                    stddev: 0.002
-                }),
-                trainable: this.trainable,
-            }).apply(shortcut);
+            shortcut = tf.layers.batchNormalization(this.getBnormConfig()).apply(shortcut);
         }
         // bottleneck layer 1
-        let residual = tf.layers.batchNormalization({
-            momentum: 0.9,
-            epsilon: 2e-5,
-            betaInitializer: 'zeros',
-            gammaInitializer: tf.initializers.randomNormal({
-                mean: 1.0,
-                stddev: 0.002
-            }),
-            trainable: this.trainable,
-        }).apply(upperModel.output);
+        let residual = tf.layers.batchNormalization(this.getBnormConfig()).apply(upperModel.output);
 
         residual = tf.layers.conv2d({
             filters: bottleneckDepth,
@@ -136,7 +96,33 @@ export class ArcFaceResnetModel {
                     kernelInitializer: this.weightInit,
                     padding: 'same'
                 }).apply(upperLayer.output);
+
+                net = tf.layers.batchNormalization(this.getBnormConfig()).apply(net);
+            } else {
+                net = tf.layers.conv2d({
+                    filters: numOuputs,
+                    kernelSize: [kernelSize, kernelSize],
+                    strides: [strides, strides],
+                    biasInitializer: null,
+                    dilationRate: dilationRate,
+                    kernelInitializer: this.weightInit,
+                    padding: 'same'
+                }).apply(upperLayer.output);
             }
         }
+    }
+
+    private getBnormConfig() {
+        return {
+            axis: 3,
+            momentum: 0.9,
+            epsilon: 2e-5,
+            betaInitializer: 'zeros',
+            gammaInitializer: tf.initializers.randomNormal({
+                mean: 1.0,
+                stddev: 0.002
+            }),
+            trainable: this.trainable,
+        };
     }
 }
