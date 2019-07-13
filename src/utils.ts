@@ -1,5 +1,6 @@
 import * as tf from '@tensorflow/tfjs-node';
 import * as path from 'path';
+import { Image } from 'nodoface';
 
 export namespace Utils {
     export const ROOT_DIR = path.resolve(path.join(__dirname, '..'));
@@ -16,4 +17,10 @@ export namespace Utils {
         return await tf.loadFrozenModel(modelDef, weights);
     }
 
+    export function imageToTensor(image: Image) {
+        const flatImg = image.toUint8Array();
+        const shape = [image.height(), image.width(), image.channels()];
+        let arr = Float32Array.from(flatImg);
+        return tf.tensor(arr, shape, 'float32');
+    }
 }

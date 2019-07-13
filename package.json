@@ -23,7 +23,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@tensorflow/tfjs-node": "0.3.2",
-    "nodoface": "0.0.2",
+    "nodoface": "0.0.3",
     "rollup": "^1.16.6"
   },
   "devDependencies": {
