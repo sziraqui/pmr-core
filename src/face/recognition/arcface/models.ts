@@ -27,7 +27,7 @@ export class ArcFaceResnetModel {
         const bnorm2 = tf.layers.batchNormalization(this.getBnormConfig()); // .apply(lastBlock)
         // ? get ouput of bnorm2
     }
-    resnetV1Layers(upperModel: tf.LayersModel, depth: number, bottleneckDepth: number, stride: number, rate: number = 1) {
+    resnetV1Layers(upperModel: tf.layers.Layer, depth: number, bottleneckDepth: number, stride: number, rate: number = 1) {
         // ? get output shape of topLayer
         let shortcut;
 
@@ -84,7 +84,7 @@ export class ArcFaceResnetModel {
         return inputs;
     }
 
-    conv2dsame(upperLayer: tf.LayersModel, numOuputs, kernelSize: number, strides: number, dilationRate: number) {
+    conv2dsame(upperLayer: tf.layers.Layer, numOuputs, kernelSize: number, strides: number, dilationRate: number) {
         let net;
         if (strides == 1) {
             if (dilationRate == 1) {
