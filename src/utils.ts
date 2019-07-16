@@ -11,12 +11,6 @@ export namespace Utils {
         return await tf.loadLayersModel(path.join(FILE_PREFIX + MODEL_DIR, modelName, 'model.json'));
     }
 
-    export async function loadFrozenModel(modelName: string) {
-        const modelDef = FILE_PREFIX + path.join(MODEL_DIR, modelName, 'tensorflowjs_model.pb');
-        const weights = FILE_PREFIX + path.join(MODEL_DIR, modelName, 'weights_manifest.json');
-        return await tf.loadFrozenModel(modelDef, weights);
-    }
-
     export function imageToTensor(image: Image) {
         const flatImg = image.toUint8Array();
         const shape = [image.height(), image.width(), image.channels()];
