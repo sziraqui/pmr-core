@@ -2,7 +2,7 @@
   "name": "pmr-core",
   "version": "0.0.1",
   "description": "Core library of Poor Man's Rekognition project under CCExtractor Development",
-  "main": "lib/index.js",
+  "main": "./src/index.ts",
   "scripts": {
     "test": "node_modules/.bin/mocha --require ts-node/register src/**/*.test.ts"
   },

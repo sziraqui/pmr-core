@@ -1,0 +1,1 @@
+export { Facenet } from './facenet/model';
