@@ -22,4 +22,10 @@ export class ObjectBlob {
         this.id = ObjectBlob.count++;
     }
 
+
+    public getId(): number {
+        return this.id;
+    }
+
+
 }

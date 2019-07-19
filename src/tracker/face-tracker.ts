@@ -6,6 +6,7 @@ import { ObjectBlob } from "./object-blob";
 import { FaceBlob } from "../face";
 import { Tensor3D } from "@tensorflow/tfjs-node";
 import { IoUMap, IOU } from "./tracker-utils";
+import { VisTracking } from './visualise';
 import { FaceMatcher } from "../face/recognition/macther";
 
 
@@ -69,7 +70,9 @@ export class FaceTracker {
 
         while (this.capture.isOpened() && this.capture.getProgress() < 1) {
             await this.next();
+            VisTracking.annotate(this.currFrame, this.blobs)
         }
+        this.capture.close();
     }
 
     async next() {
@@ -194,7 +197,7 @@ export class FaceTracker {
         this.blobs[targetIndex].attrs['descriptor'] = face.descriptor;
     }
 
-    // delete blobs which are not in past blobDelInterval number of frames
+    // delete blobs which are not seen since past blobDelInterval number of frames
     deleteOldBlobs() {
         let newBlobs = Array<ObjectBlob>();
         this.blobs.forEach((blob, i) => {
