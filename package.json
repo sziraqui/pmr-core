@@ -23,11 +23,13 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@tensorflow/tfjs-node": "^1.2.4",
+    "argparse": "^1.0.10",
     "face-api.js": "^0.20.1",
     "nodoface": "0.0.4",
     "rollup": "^1.16.6"
   },
   "devDependencies": {
+    "@types/argparse": "^1.0.36",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.0.12",

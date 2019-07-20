@@ -1,5 +1,5 @@
 import { ObjectBlob } from '../tracker/object-blob';
-import { drawRect, showImage, Image } from 'nodoface';
+import { drawRect, showImage, Image, waitKey } from 'nodoface';
 
 export const colorPallete = [
     [255, 0, 0], // red
@@ -45,6 +45,8 @@ export class VisTracking {
         blobs.forEach((blob, i) => {
             let color = colorPallete[blob.getId() % colorPallete.length];
             drawRect(image, blob.lastRect, color);
+            showImage(image, 'VisTracking');
+            waitKey(1000 / 30);
         });
     }
 }
