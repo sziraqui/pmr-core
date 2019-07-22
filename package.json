@@ -38,5 +38,13 @@
     "mocha": "^6.1.4",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sziraqui/pmr-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sziraqui/pmr-core/issues"
+  },
+  "homepage": "https://github.com/sziraqui/pmr-core#readme"
 }
