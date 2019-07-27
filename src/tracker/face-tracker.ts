@@ -1,17 +1,17 @@
-import { VideoCapture, ImageCapture, Image } from "nodoface";
+import { VideoCapture, ImageCapture, Image, SequenceCapture, showImage, waitKey } from "nodoface";
 import { Facenet, utils } from "../";
 import { FaceDetectorConfig, FaceDetector } from "../face/detection/main";
 import { FaceRecogConfig } from "../face/recognition/recogniser-base";
 import { ObjectBlob } from "./object-blob";
 import { FaceBlob } from "../face";
-import { Tensor3D } from "@tensorflow/tfjs-node";
+import { Tensor3D, util } from "@tensorflow/tfjs-node";
 import { IoUMap, IOU } from "./tracker-utils";
 import { VisTracking } from './visualise';
 import { FaceMatcher } from "../face/recognition/macther";
 
 
 export interface TrackerConfig {
-    capture: VideoCapture;//| ImageCapture | VideoCapture;
+    capture: VideoCapture;
     detectorConfig?: FaceDetectorConfig;
     recogniserConfig?: FaceRecogConfig;
     inputFPS?: number;
@@ -24,7 +24,7 @@ export interface TrackerConfig {
 
 export class FaceTracker {
 
-    capture: VideoCapture; // | ImageCapture | VideoCapture;
+    capture: VideoCapture;
     detector: FaceDetector;
     recogniser: Facenet;
     inputFPS: number;
@@ -38,7 +38,7 @@ export class FaceTracker {
     recogConfig: FaceRecogConfig;
     detectorConfig: FaceDetectorConfig;
 
-    private currFrame;
+    private currFrame: Image;
     private lastFrame;
 
     private faceMatcher: FaceMatcher;
@@ -85,14 +85,14 @@ export class FaceTracker {
         await this.assignBlobs(faces);
         console.log('Frame no.', this.frameNo);
         // this.lastFrame = this.currFrame;
-        return this.blobs;
+        return await this.blobs;
     }
 
     nextFrame() {
         let frame: Image;
         try {
             if (this.capture instanceof VideoCapture) {
-                frame = this.capture.read();
+                frame = this.capture.read()
                 this.frameNo++;
             }
         } catch (error) {
@@ -105,7 +105,8 @@ export class FaceTracker {
      * @param faces 
      */
     async assignBlobs(faces: FaceBlob[]) {
-        if (this.blobs == undefined) {
+        console.log('in assignBlobs')
+        if (!this.blobs) {
             return await this.initBlobs(faces);
         }
         let faceAssigned = Array<boolean>(faces.length).fill(false);
@@ -166,14 +167,15 @@ export class FaceTracker {
             }
         }
 
-        // this.deleteOldBlobs();
+        this.deleteOldBlobs();
         // correct the rcognitions at every recogFPS interval
-        // if (this.frameNo % this.recogFPS == 0) {
-        //     this.faceMatcher.match(this.blobs, this.recogConfig.distanceThreshold); // assign names from known names
-        // }
+        if (this.frameNo % this.recogFPS == 0) {
+            this.faceMatcher.match(this.blobs, this.recogConfig.distanceThreshold); // assign names from known names
+        }
     }
 
     async initBlobs(faces: FaceBlob[]) {
+        console.log('in initBlobs');
         this.blobs = new Array<ObjectBlob>();
         for (let i = 0; i < faces.length; i++) {
             let blob = new ObjectBlob('face', faces[i].bbox, this.frameNo, faces[i].confidence);
@@ -185,6 +187,7 @@ export class FaceTracker {
     }
 
     updateBlob(face: FaceBlob, targetIndex: number) {
+        console.log('in updateBlob: updated blob no.', targetIndex);
         this.blobs[targetIndex].lastRect = face.bbox;
         this.blobs[targetIndex].lastFrameNo = this.frameNo;
         this.blobs[targetIndex].confidence = face.confidence;

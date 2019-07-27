@@ -8,5 +8,7 @@ export class FaceBlob {
 
     constructor(sourceImage: Image, public bbox: Rect, public confidence) {
         this.faceImage = sourceImage.extract(bbox);
+        this.descriptor = null;
+        this.name = null;
     }
 }

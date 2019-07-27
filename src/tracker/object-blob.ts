@@ -13,7 +13,7 @@ export class ObjectBlob {
     confidence: number;
     private static count: number = 0;
 
-    constructor(type: BlobType, bbox: Rect, frameNo: number, confidence: number, attrs?: Object) {
+    constructor(type: BlobType, bbox: Rect, frameNo: number, confidence: number, attrs: Object = {}) {
         this.type = type;
         this.firstFrameNo = this.lastFrameNo = frameNo;
         this.lastRect = bbox;

@@ -4,13 +4,13 @@ import { Facenet, FaceDetector, FaceModelParameters, VideoCapture, FaceTracker, 
 import { FaceDetectorConfig } from "../src/face/detection/main";
 import { FaceRecogConfig } from "../src/face/recognition/recogniser-base";
 import { ArgumentParser } from 'argparse'
-import { Image, readImage, DetectionResult } from 'nodoface';
+import { Image, readImage, DetectionResult, SequenceCapture } from 'nodoface';
 import { Tensor3D } from "@tensorflow/tfjs";
 import { FaceMatcher } from "../src/face/recognition/macther";
 
 async function run(args) {
 
-    console.log(args);
+    // console.log(args);
 
     const modelParams = new FaceModelParameters(process.argv);
 
