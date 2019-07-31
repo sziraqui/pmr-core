@@ -1,0 +1,5 @@
+models/resnet*
+models/arcface*
+outputs/*
+lib
+.vscode
