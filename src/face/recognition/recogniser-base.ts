@@ -1,5 +1,5 @@
-import { Tensor3D } from '@tensorflow/tfjs-node';
 import { FaceBlob } from '../face-blob';
+import { Image } from 'nodoface';
 
 export interface FaceRecogConfig {
     recogniser?: 'facenet' // | 'arcface'; // though arcface not working yet
@@ -9,7 +9,7 @@ export interface FaceRecogConfig {
 
 export interface FaceRecog {
 
-    embedding(faceImage: Tensor3D): Promise<Float32Array>;
+    embedding(faceImage: Image): Promise<Float32Array>;
 
     distance(embedding1: Float32Array, embedding2: Float32Array): number;
 }

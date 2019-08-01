@@ -3,6 +3,8 @@ import { FaceRecognitionNet } from 'face-api.js';
 import * as path from "path";
 import * as tf from '@tensorflow/tfjs-node';
 import { Utils } from '../../../utils';
+import { Image } from "nodoface";
+import { utils } from "../../..";
 
 export class Facenet implements FaceRecog {
 
@@ -23,9 +25,9 @@ export class Facenet implements FaceRecog {
         return Facenet.instance;
     }
 
-    async embedding(faceImage: tf.Tensor3D) {
+    async embedding(faceImage: Image) {
 
-        let descriptor = await this.model.computeFaceDescriptor(faceImage);
+        let descriptor = await this.model.computeFaceDescriptor(utils.imageToTensor(faceImage));
         return (descriptor as Float32Array);
     }
 

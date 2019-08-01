@@ -138,7 +138,7 @@ export class FaceTracker {
             if (!faceAssigned[i]) {
                 // TODO: compute descriptors in parallel
                 if (faces[i].descriptor == undefined) {
-                    faces[i].descriptor = await this.recogniser.embedding(utils.imageToTensor(faces[i].faceImage) as Tensor3D);
+                    faces[i].descriptor = await this.recogniser.embedding(faces[i].faceImage);
                 }
                 let minDist = 1000000000000;
                 let index = -1;
@@ -179,7 +179,7 @@ export class FaceTracker {
         this.blobs = new Array<ObjectBlob>();
         for (let i = 0; i < faces.length; i++) {
             let blob = new ObjectBlob('face', faces[i].bbox, this.frameNo, faces[i].confidence);
-            faces[i].descriptor = await this.recogniser.embedding(utils.imageToTensor(faces[i].faceImage) as Tensor3D)
+            faces[i].descriptor = await this.recogniser.embedding(faces[i].faceImage);
             blob.attrs['descriptor'] = faces[i].descriptor;
             this.blobs.push(blob);
         }
