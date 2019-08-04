@@ -23,7 +23,7 @@ export class FaceDetector {
     private constructor(config: FaceDetectorConfig) {
         this.detector = config.detector ? config.detector : 'mtcnn';
         this.minConfidence = config.minConfidence ? config.minConfidence : 0.6;
-        this.drawBBox = config.drawBBox ? config.drawBBox : true;
+        this.drawBBox = config.drawBBox ? config.drawBBox : false;
         this.bboxColor = config.bboxColor ? config.bboxColor : [0, 255, 0];
 
     }
@@ -61,6 +61,20 @@ export class FaceDetector {
             }
         }
         return faces;
+    }
+
+    public async detectLargest(image: Image) {
+        let result: DetectionResult = await this.model.detectFaces(image);
+        let maxArea = 0;
+        let maxIndex = 0;
+        for (let i = 0; i < result.detections.length; i++) {
+            let area = result.detections[i].width * result.detections[i].height;
+            if (area > maxArea && result.confidences[i] >= this.minConfidence) {
+                maxArea = area;
+                maxIndex = i;
+            }
+        }
+        return new FaceBlob(image, result.detections[maxIndex], result.confidences[maxIndex]);
     }
 
 }
