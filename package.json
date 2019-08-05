@@ -22,9 +22,12 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
+    "@tensorflow-models/knn-classifier": "^1.2.1",
     "@tensorflow/tfjs-node": "^1.2.4",
+    "@types/lodash": "^4.14.137",
     "argparse": "^1.0.10",
     "face-api.js": "^0.20.1",
+    "lodash": "^4.17.15",
     "nodoface": "0.0.7",
     "rollup": "^1.16.6"
   },
