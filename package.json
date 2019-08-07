@@ -4,7 +4,7 @@
   "description": "Core library of Poor Man's Rekognition project under CCExtractor Development",
   "main": "./src/index.ts",
   "scripts": {
-    "test": "node_modules/.bin/mocha --require ts-node/register src/**/*.test.ts"
+    "test": "node_modules/.bin/mocha --timeout 999999999999 --require ts-node/register src/**/*.test.ts"
   },
   "engines": {
     "node": ">=8"
@@ -23,7 +23,8 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@tensorflow-models/knn-classifier": "^1.2.1",
-    "@tensorflow/tfjs-node": "^1.2.4",
+    "@tensorflow/tfjs-core": "^1.2.7",
+    "@tensorflow/tfjs-node": "^1.2.1",
     "@types/lodash": "^4.14.137",
     "argparse": "^1.0.10",
     "face-api.js": "^0.20.1",
