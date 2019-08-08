@@ -1,9 +1,9 @@
 import { readFileSync, existsSync } from 'fs';
 import * as tf from '@tensorflow/tfjs-core';
-import { utils } from '..';
+import { utils } from '../..';
 import * as path from 'path';
 import * as _ from 'lodash';
-import * as knn from '../../../knn-classifier/src/index';
+import * as knn from '../../../../knn-classifier/src/index';
 export const K = 4;
 
 export class FaceClassifier {

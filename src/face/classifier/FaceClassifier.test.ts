@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
 import { FaceClassifier } from './FaceClassifier';
-import { DbHelper } from '../../../pmr-server/src/dbclient'
+import { DbHelper } from '../../../../pmr-server/src/dbclient'
 
 describe.only('FaceClassifier', () => {
     let db: DbHelper;
